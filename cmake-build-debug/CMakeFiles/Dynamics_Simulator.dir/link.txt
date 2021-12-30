@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/Dynamics_Simulator.dir/main.cpp.o CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.o -o Dynamics_Simulator 

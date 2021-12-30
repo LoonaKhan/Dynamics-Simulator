@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/loona/programming/learning/C|C++/Dynamics-Simulator/main.cpp
+iostream
+-
+utility
+-
+vector
+-
+string
+-
+unistd.h
+-
+SFML/Graphics.hpp
+-
+cstdlib
+-
+ctime
+-
+

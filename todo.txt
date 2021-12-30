@@ -1,0 +1,18 @@
+set fps to 60
+
+finish momentum implementation
+
+random colours
+
+cooldown on creating squares
+    bool varible, is mouse down calculated every frame
+    if its false and we click, we make it true,
+    if its true and we click, we do nothing
+
+    drag click to create more
+
+learn cmake
+
+use somn better than std::rand()
+
+stop using namespaces so much
