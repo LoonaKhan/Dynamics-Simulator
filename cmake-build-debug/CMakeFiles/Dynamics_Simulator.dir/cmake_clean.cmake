@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.o"
   "CMakeFiles/Dynamics_Simulator.dir/main.cpp.o"
-  "CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.o"
   "Dynamics_Simulator"
   "Dynamics_Simulator.pdb"
 )

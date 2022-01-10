@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/home/loona/programming/learning/C|C++/Dynamics-Simulator/Collider.h
+SFML/Graphics.hpp
+-
+
 /home/loona/programming/learning/C|C++/Dynamics-Simulator/main.cpp
 iostream
 -
@@ -23,4 +27,6 @@ cstdlib
 -
 ctime
 -
+Collider.h
+/home/loona/programming/learning/C|C++/Dynamics-Simulator/Collider.h
 

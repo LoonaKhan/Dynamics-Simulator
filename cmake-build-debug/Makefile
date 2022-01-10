@@ -129,6 +129,30 @@ Dynamics_Simulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/build
 .PHONY : Dynamics_Simulator/fast
 
+Collider.o: Collider.cpp.o
+.PHONY : Collider.o
+
+# target to build an object file
+Collider.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.o
+.PHONY : Collider.cpp.o
+
+Collider.i: Collider.cpp.i
+.PHONY : Collider.i
+
+# target to preprocess a source file
+Collider.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.i
+.PHONY : Collider.cpp.i
+
+Collider.s: Collider.cpp.s
+.PHONY : Collider.s
+
+# target to generate assembly for a file
+Collider.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.s
+.PHONY : Collider.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -153,30 +177,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-sfmltest.o: sfmltest.cpp.o
-.PHONY : sfmltest.o
-
-# target to build an object file
-sfmltest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.o
-.PHONY : sfmltest.cpp.o
-
-sfmltest.i: sfmltest.cpp.i
-.PHONY : sfmltest.i
-
-# target to preprocess a source file
-sfmltest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.i
-.PHONY : sfmltest.cpp.i
-
-sfmltest.s: sfmltest.cpp.s
-.PHONY : sfmltest.s
-
-# target to generate assembly for a file
-sfmltest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dynamics_Simulator.dir/build.make CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.s
-.PHONY : sfmltest.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Dynamics_Simulator"
+	@echo "... Collider.o"
+	@echo "... Collider.i"
+	@echo "... Collider.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... sfmltest.o"
-	@echo "... sfmltest.i"
-	@echo "... sfmltest.s"
 .PHONY : help
 
 

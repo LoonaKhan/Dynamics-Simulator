@@ -84,10 +84,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/main.cpp">
+		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/Collider.cpp">
 			<Option target="Dynamics_Simulator"/>
 		</Unit>
-		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/sfmltest.cpp">
+		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/Collider.h">
+			<Option target="Dynamics_Simulator"/>
+		</Unit>
+		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/main.cpp">
 			<Option target="Dynamics_Simulator"/>
 		</Unit>
 		<Unit filename="/home/loona/programming/learning/C|C++/Dynamics-Simulator/CMakeLists.txt">

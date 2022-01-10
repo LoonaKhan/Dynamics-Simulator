@@ -1,0 +1,28 @@
+//
+// Created by loona on 2022-01-02.
+//
+
+#ifndef DYNAMICS_SIMULATOR_COLLIDER_H
+#define DYNAMICS_SIMULATOR_COLLIDER_H
+#include <SFML//Graphics.hpp>
+
+
+class Collider {
+    public:
+        Collider(sf::RectangleShape& body);
+        ~Collider();
+
+        void Move(float dx, float dy){body.move(dx, dy);}
+
+        bool CheckCollision(Collider& other, float push);
+
+        sf::Vector2f GetPosition(){return body.getPosition();}
+        sf::Vector2f GetHalfSize(){return body.getSize()/2.0f;}
+
+    private:
+        sf::RectangleShape& body;
+
+};
+
+
+#endif //DYNAMICS_SIMULATOR_COLLIDER_H

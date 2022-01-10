@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/loona/programming/learning/C|C++/Dynamics-Simulator/Collider.cpp" "/home/loona/programming/learning/C|C++/Dynamics-Simulator/cmake-build-debug/CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.o"
   "/home/loona/programming/learning/C|C++/Dynamics-Simulator/main.cpp" "/home/loona/programming/learning/C|C++/Dynamics-Simulator/cmake-build-debug/CMakeFiles/Dynamics_Simulator.dir/main.cpp.o"
-  "/home/loona/programming/learning/C|C++/Dynamics-Simulator/sfmltest.cpp" "/home/loona/programming/learning/C|C++/Dynamics-Simulator/cmake-build-debug/CMakeFiles/Dynamics_Simulator.dir/sfmltest.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

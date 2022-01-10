@@ -19,16 +19,19 @@
 #include <SFML//Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
+#include "Collider.h"
 using namespace sf;
 using namespace std;
 
-class particle{
+class Particle{
     public:
-        vector<float> v, a, size, pos = {0.0,0.0};
+        static vector<Particle> particles;
+        vector<float> v, a, size,rad, pos = {0.0, 0.0};
         RectangleShape player;
         float right, left, top, bottom, m;
+        Collider GetCollider() {return Collider(player);}
 
-    explicit particle(vector<float> v={0,0}, vector<float> a={0,0}, float m=1.0f,
+    explicit Particle(vector<float> v={0, 0}, vector<float> a={0, 0}, float m=1.0f,
                       vector<float> pos={0,0}, const string& colour="Red", vector<float> dimentions={10.0, 10.0}){
 
         this->v =std::move(v);
@@ -39,6 +42,7 @@ class particle{
         this->player.setPosition(pos[0], pos[1]);
 
         this->size = dimentions;
+        this->rad = {this->size[0] / 2, this->size[1] / 2};
         this->player.setSize(Vector2f(dimentions[0], dimentions[1]));
         this->player.setOrigin(dimentions[0]/2, dimentions[1]/2);
 
@@ -73,8 +77,10 @@ class particle{
 
         void simulate(){
             check_inputs();
+            collision();
             accelerate();
             move();
+            //GetCollider().CheckCollision(player.Ge)
         };
 
         void move(){
@@ -111,14 +117,50 @@ class particle{
             }
         }
 
-        float collision(particle mass2){
-            // make this a list of all particles collided, not just 2
-            float Px_total = (this->m*this->v[0])+(mass2.m*mass2.v[0]);
-            float Py_total = (this->m*this->v[1])+(mass2.m*mass2.v[1]);
+        void collision(){
+            // make this a list of all particles collided, not just 2?
+            /*
+             * Explanation on the process and explaining deltas, rads and the collision formulas
+             */
+            for (int i=0; i<Particle::particles.size(); i++){
+                Particle mass2 = Particle::particles[i];
 
-            this->v = {};
+                float deltax, deltay; // determine the deltas. the distance from the origins of each particle
+                deltax=(abs(this->pos[0]-mass2.pos[0]));
+                deltay=(abs(this->pos[1]-mass2.pos[1]));
 
-            //return mass2 velocity
+                // Calculating if the 2 particles are colliding or not based on the rads and deltas
+                if ((((deltax-(this->rad[0]+mass2.rad[0])) <=0.0f) and ((deltay-(this->rad[1]+mass2.rad[1]))) <=0.0f)and !(mass2.pos == this->pos)){
+                    //cout<< "colliding" <<endl;
+                    float tot_mass = this->m + mass2.m;
+                    //for (int i=0; i<this->v.size(); i++) {
+                        //this->v[i] = -this->v[i];
+                        //mass2.v[i] = -mass2.v[i];
+                        //this->v[i] = 0.0004;//((this->m - mass2.m)/(tot_mass)) * this->v[i];
+                        //mass2.v[i] = 0.005;//((2.0f*this->m)/(tot_mass))*this->v[i];
+                        if (mass2.m > this->m){
+                            for(int i=0; i<this->v.size(); i++){
+                                this->v[i] = -1.1f*this->v[i];
+                                mass2.v[i] = -mass2.v[i];
+                            }
+                        }
+                        else{
+                            for(int i=0; i<this->v.size(); i++){
+                                this->v[i] = -this->v[i];
+                                mass2.v[i] = -1.1f*mass2.v[i];
+                            }
+                        }
+                    //}
+
+                    cout << mass2.v[0] << ", " << mass2.v[1] << "      " << this->v[0] << ", "<< this->v[1]<<endl;
+                    this->move(); mass2.move();
+                    return;
+
+                }
+               //this->GetCollider().CheckCollision(&mass2.GetCollider(), 0.0f);
+            }
+            //cout << " " << endl;
+
         }
 
         void accelerate(){
@@ -153,9 +195,26 @@ class particle{
 
 };
 
+class Group{
+    /*
+     * Make this like Sprite Groups in pygame
+     * u can cycle through all particles in a group for collision detection, add and delete them from the group
+     * basically a container for particles
+     */
+public:
+    vector<Particle> list;
+    Group(){
+        this->list = {};
+    }
+
+    void add(const Particle& p){
+        this->list.push_back(p);
+    }
+};
+
 // global variables
-vector<particle> particles;
-float max_accel = 2.0;
+vector<Particle> Particle::particles = {};
+float max_accel = 0.4;
 float min_accel = 0.00000001;
 int FPS = 60; //frames per second
 float SPF = 1.0f/(float)FPS; // seconds per frame
@@ -171,32 +230,33 @@ float get_rand(float max=::max_accel){
     return num;
 }
 
+float get_pos_rand(float max, float min=0){
+    srand(time(0));
+    float num = min + ((float)rand())/((float)RAND_MAX/max);
+    cout << num <<endl;
+    return num;
+}
+
 void new_particle(const vector<float>& mouse_pos){
     /*
      * Creates new particles
      */
     string colours[] = {"Red", "Blue", "Green", "Yellow", "White", "Cyan", "Magenta"};
-    float vx, vy, colour;
+    float vx, vy, mass, colour;
     vx = get_rand();
     vy = get_rand();
+    mass = get_pos_rand(6.0f);
     colour = abs(get_rand(colours->size()));
-    particle p({vx,vy}, {0.0, 0.0}, 1.0, mouse_pos, colours[int(min(((int)colour), (int)colours->size() - 1))]);
-    particles.push_back(p);
-    if (particles.size() >100)
-        particles.erase(particles.begin());
+
+    Particle p({vx, vy}, {0.0, 0.0}, mass, mouse_pos, colours[int(min(((int)colour), (int)colours->size() - 1))], {40.0, 40.0});
+    Particle::particles.push_back(p);
+    if (Particle::particles.size() >100)
+        Particle::particles.erase(Particle::particles.begin());
 }
 
 int main(){
     RenderWindow window(VideoMode(1024,1024), "Window", Style::Close | Style::Resize); // creates the window
-    //particle q({0,0}, {0,0}, 1.0, {0,0}, "Red"); //initializes the particle
-
-    /*
-     * the initial message
-     */
-    //cout << "Initial Velocity: [" << p.v[0]<<","<<p.v[1]<<"]" << endl;
-    //cout << "Initial Acceleration: [" << p.a[0]<<","<<p.a[1]<<"]" << endl;
-    //cout << "-----------------------------" <<endl;
-    //sleep(3);
+    //Particle q({0,0}, {0,0}, 1.0, {0,0}, "Red"); //initializes the Particle
 
     while (window.isOpen()){
         Event evnt{};
@@ -204,14 +264,14 @@ int main(){
         while(window.pollEvent(evnt)) {
             if (evnt.type == evnt.Closed or Keyboard::isKeyPressed(Keyboard::Key::Escape)){
                 window.close();
-                for (int p=0; p<particles.size(); p++){
-                    //cout << particles[p].a[0]<<particles[p].a[1] <<endl;
+                for (int i=0; i<Particle::particles.size(); i++){
+                    cout << Particle::particles[i].pos[0] << ", " << Particle::particles[i].pos[1] <<endl;
                 }
             }
         }
 
         //drag click to create more
-        if (Mouse::isButtonPressed(Mouse::Right) and !Mouse_Clicked_Last_Frame){ // creates a new particle on left click
+        if (Mouse::isButtonPressed(Mouse::Right) and !Mouse_Clicked_Last_Frame){ // creates a new Particle on click
             ::Mouse_Clicked_Last_Frame = true;
             Vector2i mouse_pos = Mouse::getPosition(window);
             ::new_particle({(float)mouse_pos.x, (float)mouse_pos.y});
@@ -220,22 +280,15 @@ int main(){
             Mouse_Clicked_Last_Frame = false;
         }
 
-        for (int part = 0; part<particles.size(); part++){ // simulates all particles
-            particles[part].simulate();
+        for (int part = 0; part<Particle::particles.size(); part++){ // simulates all particles
+            Particle::particles[part].simulate();
         }
-        //q.simulate();
-        //cout<<"Velocity: [" << p.v.front() <<","<< p.v.back() << "]" <<endl;
-        //cout<<"Position: [" << p.pos.front() <<","<< p.pos.back() << "]" <<endl;
-        //cout <<"Acceleration: ["<< p.a.front() <<","<<p.a.back()<<"]"<<endl;
-        //cout<<"-----------------------------" <<endl;
-        //sleep(1);
 
         window.clear();
         //window.draw(q.player);
-        for (int part = 0; part<particles.size(); part++){
-            window.draw(particles[part].player);
+        for (int part = 0; part<Particle::particles.size(); part++){
+            window.draw(Particle::particles[part].player);
         }
-        //window.draw(p.player); //draw to the back buffer
         window.display(); //move the back buffer to the front buffer
 
 
