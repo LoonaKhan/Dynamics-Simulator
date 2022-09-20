@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/Dynamics_Simulator.dir/main.cpp.o CMakeFiles/Dynamics_Simulator.dir/Collider.cpp.o -o Dynamics_Simulator  -lsfml-graphics -lsfml-window -lsfml-system 
